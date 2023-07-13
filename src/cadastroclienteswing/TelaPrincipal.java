@@ -5,7 +5,6 @@
 package cadastroclienteswing;
 
 import dao.ClienteMapDAO;
-import dao.ClienteSetDAO;
 import dao.IClienteDAO;
 import domain.Cliente;
 import javax.swing.JOptionPane;
@@ -351,9 +350,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 
                 JOptionPane.showMessageDialog(rootPane, "Cliente alterado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
-            
-            
-            
         }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
