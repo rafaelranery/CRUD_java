@@ -33,8 +33,10 @@ public class ClienteSetDAO implements IClienteDAO {
 
     @Override
     public void excluir(Long cpf) {
-        if(this.set.contains(cpf)) {
-            this.set.remove(cpf);
+        Cliente c = consultar(cpf);
+        
+        if(this.set.contains(c)) {
+            this.set.remove(c);
         }
     }
 
@@ -42,7 +44,13 @@ public class ClienteSetDAO implements IClienteDAO {
     public void alterar(Cliente cliente) {
         for(Cliente c : this.set) {
             if(c.equals(cliente)) {
-                c = cliente;
+                c.setNome(cliente.getNome());
+                c.setCpf(cliente.getCpf());
+                c.setTel(cliente.getTel());
+                c.setEnd(cliente.getEnd());
+                c.setNumero(cliente.getNumero());
+                c.setCidade(cliente.getCidade());
+                c.setEstado(cliente.getEstado());
                 break;
             }
         }

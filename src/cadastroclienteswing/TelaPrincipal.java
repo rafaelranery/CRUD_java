@@ -5,6 +5,7 @@
 package cadastroclienteswing;
 
 import dao.ClienteMapDAO;
+import dao.ClienteSetDAO;
 import dao.IClienteDAO;
 import domain.Cliente;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import validate.Validator;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
     private DefaultTableModel modelo = new DefaultTableModel();
-    private IClienteDAO clienteDAO = new ClienteMapDAO();
+    private IClienteDAO clienteDAO = new ClienteSetDAO();
     /**
      * Creates new form TelaPrincipal
      */
@@ -267,12 +268,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         // TODO add your handling code here:
         resetFields();
+        this.tabelaClients.clearSelection();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void tabelaClientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaClientsMouseClicked
         // TODO add your handling code here:
         int selectedRow = this.tabelaClients.getSelectedRow();
-        Long cpf = (Long) this.tabelaClients.getValueAt(selectedRow, 1);
+        Long cpf =  Long.valueOf(this.tabelaClients.getValueAt(selectedRow, 1).toString());
         
         Cliente c = this.clienteDAO.consultar(cpf);
         
@@ -290,7 +292,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
         int selectedRow = this.tabelaClients.getSelectedRow();
-        Long cpf = (Long) this.tabelaClients.getValueAt(selectedRow, 1);
+        Long cpf = Long.valueOf(this.tabelaClients.getValueAt(selectedRow, 1).toString());
         if(cpf == null || "".equals(cpf)) {
             JOptionPane.showMessageDialog(rootPane, "Escolha um usuário na tabela.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -306,6 +308,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 modelo.removeRow(selectedRow);
                 JOptionPane.showMessageDialog(rootPane, "Cliente excluído com sucesso.");
                 resetFields();
+                this.tabelaClients.clearSelection();
             }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -313,7 +316,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         // TODO add your handling code here:
         int selectedRow = this.tabelaClients.getSelectedRow();
-        Long cpfConsult = (Long) this.tabelaClients.getValueAt(selectedRow, 1);
+        Long cpfConsult = Long.valueOf(this.tabelaClients.getValueAt(selectedRow, 1).toString());
         
         if(cpfConsult == null || "".equals(cpfConsult)) {
             JOptionPane.showMessageDialog(rootPane, "Escolha um usuário na tabela.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -347,7 +350,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 modelo.removeRow(selectedRow);
                 modelo.addRow(new Object[]{nome, cpf, tel, end});
                 resetFields();
-                
+                this.tabelaClients.clearSelection();
                 JOptionPane.showMessageDialog(rootPane, "Cliente alterado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
         }
@@ -431,5 +434,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txtNumero.setText(null);
         txtCidade.setText(null);
         txtEstado.setText(null);
+        
     }
 }
